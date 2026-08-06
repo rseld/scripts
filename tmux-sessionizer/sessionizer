@@ -7,17 +7,35 @@ selected=$(find ~/Programming ~/scripts ~/.config -mindepth 1 -maxdepth 1 -type 
 selected_name=$(basename "$selected" | tr . _ )
 tmux_running=$(pgrep tmux)
 
+default_layout()
+{
+    tmux neww -dt "$selected_name" -c "$selected"
+    tmux send-keys -t "$selected_name:1" "nvim" C-m
+}
+
+create_session()
+{
+    tmux new-session -ds "$selected_name" -c "$selected"
+    default_layout
+}
+
+switch_to()
+{
+    if [[ -z $TMUX ]]; then
+        tmux attach-session -t "$1"
+    else
+        tmux switch-client -t "$1"
+    fi
+}
+
 if [[ -z $TMUX ]] && [[ -z $tmux_running ]]; then
-    tmux new-session -s  "$selected_name" -c "$selected"
+    create_session
+    switch_to "$selected_name"
     exit 0
 fi
 
 if ! tmux has-session -t="$selected_name" 2>/dev/null; then
-    tmux new-session -ds "$selected_name" -c "$selected"
+    create_session
 fi
 
-if [[ -z $TMUX ]]; then
-    tmux attach-session -t "$selected_name"
-else
-    tmux switch-client -t "$selected_name"
-fi
+switch_to "$selected_name"
