@@ -1,5 +1,10 @@
 #!/usr/bin/env bash
 
+if [[ -z $TMUX ]] && [[ -z $tmux_running ]]; then
+    tmux new-session 
+    exit 0
+fi
+
 selected=$(find ~/Programming ~/scripts ~/.config -mindepth 1 -maxdepth 1 -type d | fzf)
 
 [[ -z $selected ]] && exit 0
@@ -27,12 +32,6 @@ switch_to()
         tmux switch-client -t "$1"
     fi
 }
-
-if [[ -z $TMUX ]] && [[ -z $tmux_running ]]; then
-    create_session
-    switch_to "$selected_name"
-    exit 0
-fi
 
 if ! tmux has-session -t="$selected_name" 2>/dev/null; then
     create_session
