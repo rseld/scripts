@@ -5,7 +5,7 @@ if [[ -z $TMUX ]] && [[ -z $tmux_running ]]; then
     exit 0
 fi
 
-selected=$(find ~/Programming ~/scripts ~/.config/nvim -mindepth 1 -maxdepth 1 -type d | fzf)
+selected=$(find ~/Projects ~/.config/nvim -mindepth 1 -maxdepth 1 -type d | fzf)
 
 [[ -z $selected ]] && exit 0
 
