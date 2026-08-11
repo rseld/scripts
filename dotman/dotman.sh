@@ -1,3 +1,9 @@
 #!/usr/bin/env bash
 
-rsync -a ~/.bashrc ~/.dotfiles
+rsync -av ~/.bashrc ~/.dotfiles
+rsync -av ~/.inputrc ~/.dotfiles
+rsync -av ~/.xinitrc ~/.dotfiles
+rsync -av ~/.Xdefaults ~/.dotfiles
+rsync -av ~/.config/i3 ~/.dotfiles
+rsync -av ~/.config/i3status ~/.dotfiles
+rsync -av ~/.config/tmux ~/.dotfiles
