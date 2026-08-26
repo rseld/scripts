@@ -9,18 +9,37 @@ INTERFACE="${INTERFACE:-$(ip route | awk '/^default/ { print $5 ; exit }')}"
 LABEL="${LABEL:-}"
 COLOR=${COLOR:-"#C0CAF5"}
 
+GOOD_COL="#9ECE6A"
+MID_COL="#E0AF68"
+BAD_COL="#F7768E"
+
+E_SYMB="󰈁"
+
+WGOD_SYMB="󰤨 "
+WMID_SYMB="󰤢 "
+WBAD_SYMB="󰤢 "
+
+WGOOD_THRESH=-50
+WMID_THRESH=-70
+
 if [[ "$INTERFACE" =~ "wlan" ]]; then
-    LABEL=" "
-    COLOR="#9ECE6A"
+    SSID=$(iw "$INTERFACE" info | awk '/ssid/ { print $2 ; exit}')
+    DBM=$(iw dev "$INTERFACE" link | awk '/signal/ { print $2 ; exit}')
+
+    LABEL=$WGOD_SYMB
+    COLOR=$GOOD_COL
+
+    [[ $DBM -le $WGOOD_THRESH ]] && LABEL=$WMID_SYMB && COLOR=$MID_COL
+    [[ $DBM -le $WMID_THRESH ]] && LABEL=$WBAD_SYMB && COLOR=$BAD_COL
 else
-    LABEL="󱘖 "
-    COLOR="#9ECE6A"
+    LABEL=$E_SYMB
+    COLOR=$GOOD_COL
 fi
 
 if  [[ "$INTERFACE" = "" ]] || [[ "$(cat /sys/class/net/$INTERFACE/operstate)" = 'down' ]]; then
     echo "${LABEL} down"
     echo "${LABEL} down"
-    echo "#F7768E"
+    echo $BAD_COL
     exit
 fi
 
