@@ -11,6 +11,6 @@ BAT=$(acpi -b | awk -F'[,:%]' '
 }
 ')
 
-echo "Battery: $BAT"
-echo "BAT: $BAT"
+echo " $BAT"
+echo "$BAT"
 

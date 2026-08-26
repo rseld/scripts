@@ -1,0 +1,34 @@
+#!/bin/bash
+
+AUDIO_HIGH_SYMBOL=${AUDIO_HIGH_SYMBOL:-' '}
+
+AUDIO_MED_THRESH=${AUDIO_MED_THRESH:-50}
+AUDIO_MED_SYMBOL=${AUDIO_MED_SYMBOL:-' '}
+
+AUDIO_LOW_THRESH=${AUDIO_LOW_THRESH:-20}
+AUDIO_LOW_SYMBOL=${AUDIO_LOW_SYMBOL:-' '}
+
+AUDIO_MUTED_SYMBOL=${AUDIO_MUTED_SYMBOL:-' '}
+
+MUTED_COLOR=${MUTED_COLOR:-"#F7768E"}
+DEFAULT_COLOR=${DEFAULT_COLOR:-"#C0CAF5"}
+
+LABEL="${LABEL:-}"
+
+SINK=$(pactl get-default-sink)
+VOLUME=$(pactl get-sink-volume "$SINK" | grep -oP '\d+(?=%)' | head -n1)
+MUTED=$(pactl get-sink-mute "$SINK" | grep -oP 'yes|no')
+
+if [[ $MUTED =~ "no" ]] ; then
+    LABEL="$AUDIO_HIGH_SYMBOL $VOLUME%"
+    [[ $VOLUME -le $AUDIO_MED_THRESH ]] && LABEL="$AUDIO_MED_SYMBOL $VOLUME%"
+    [[ $VOLUME -le $AUDIO_LOW_THRESH ]] && LABEL="$AUDIO_LOW_SYMBOL $VOLUME%"
+    COLOR=$DEFAULT_COLOR
+else
+    LABEL="$AUDIO_MUTED_SYMBOL Muted"
+    COLOR=$MUTED_COLOR
+fi
+
+echo "$LABEL"
+echo "$LABEL"
+echo $COLOR
