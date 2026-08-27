@@ -26,11 +26,11 @@ if [[ "$INTERFACE" =~ "wlan" ]]; then
     SSID=$(iw "$INTERFACE" info | awk '/ssid/ { print $2 ; exit}')
     DBM=$(iw dev "$INTERFACE" link | awk '/signal/ { print $2 ; exit}')
 
-    LABEL=$WGOD_SYMB
+    LABEL="$WGOD_SYMB($SSID)"
     COLOR=$GOOD_COL
 
-    [[ $DBM -le $WGOOD_THRESH ]] && LABEL=$WMID_SYMB && COLOR=$MID_COL
-    [[ $DBM -le $WMID_THRESH ]] && LABEL=$WBAD_SYMB && COLOR=$BAD_COL
+    [[ $DBM -le $WGOOD_THRESH ]] && LABEL="$WMID_SYMB($SSID)" && COLOR=$MID_COL
+    [[ $DBM -le $WMID_THRESH ]] && LABEL="$WBAD_SYMB($SSID)" && COLOR=$BAD_COL
 else
     LABEL=$E_SYMB
     COLOR=$GOOD_COL
