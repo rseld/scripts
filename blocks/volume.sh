@@ -15,9 +15,8 @@ DEFAULT_COLOR=${DEFAULT_COLOR:-"#C0CAF5"}
 
 LABEL="${LABEL:-}"
 
-SINK=$(pactl get-default-sink)
-VOLUME=$(pactl get-sink-volume "$SINK" | grep -oP '\d+(?=%)' | head -n1)
-MUTED=$(pactl get-sink-mute "$SINK" | grep -oP 'yes|no')
+VOLUME=$(pactl get-sink-volume "@DEFAULT_SINK@" | grep -oP '\d+(?=%)' | head -n1)
+MUTED=$(pactl get-sink-mute "@DEFAULT_SINK@" | grep -oP 'yes|no')
 
 if [[ $MUTED =~ "no" ]] ; then
     LABEL="$AUDIO_HIGH_SYMBOL $VOLUME%"

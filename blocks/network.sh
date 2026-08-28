@@ -1,5 +1,6 @@
 #!/bin/bash
 
+INTERFACE="${IFACE:-$BLOCK_INSTANCE}"
 INTERFACE="${INTERFACE:-$(ip route | awk '/^default/ { print $5 ; exit }')}"
 
 [[ -z "$INTERFACE" ]] && exit

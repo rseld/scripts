@@ -7,23 +7,23 @@ COLOR=${COLOR:-"#C0CAF5"}
 
 LABEL=${LABEL:-"󱉞 ?"}
 
-read STATUS PERCENTAGE < <(acpi -b | awk -F '[;, ]+' '{ print $3, $4 ; exit }')
+read STATUS PERCENTAGE < <(acpi -b | awk -F '[;,% ]+' '{ print $3, $4 ; exit }')
 
 case "$STATUS" in
 Charging)
-    LABEL="󱟦 $PERCENTAGE"
+    LABEL="󱟦 $PERCENTAGE%"
     COLOR="$GOOD_COL"
     ;;
 Full)
-    LABEL="󱟢 $PERCENTAGE"
+    LABEL="󱟢 $PERCENTAGE%"
     COLOR="$GOOD_COL"
     ;;
 Idle|AC)
-    LABEL="󱞜 $PERCENTAGE"
+    LABEL="󱞜 $PERCENTAGE%"
     ;;
 Discharging)
-    LABEL="󱟤 $PERCENTAGE"
-    if (( PERCENTAGE >= 80)); then
+    LABEL="󱟤 $PERCENTAGE%"
+    if (( PERCENTAGE >= 80 )); then
         COLOR="$GOOD_COL"
     elif (( PERCENTAGE < 80 && PERCENTAGE >= 40 )); then
         COLOR="$WARN_COL"
