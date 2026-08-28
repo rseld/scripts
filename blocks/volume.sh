@@ -1,5 +1,13 @@
 #!/bin/bash
 
+# because pactl does not start early enough on fist boot
+for i in $(seq 1 10); do
+    if pactl get-default-sink >/dev/null 2>&1; then
+        break
+    fi
+    sleep 1
+done
+
 AUDIO_HIGH_SYMBOL=${AUDIO_HIGH_SYMBOL:-' '}
 
 AUDIO_MED_THRESH=${AUDIO_MED_THRESH:-50}
@@ -18,7 +26,7 @@ LABEL="${LABEL:-}"
 VOLUME=$(pactl get-sink-volume "@DEFAULT_SINK@" | grep -oP '\d+(?=%)' | head -n1)
 MUTED=$(pactl get-sink-mute "@DEFAULT_SINK@" | grep -oP 'yes|no')
 
-if [[ $MUTED =~ "no" ]] ; then
+if [[ "$MUTED" =~ "no" ]] ; then
     LABEL="$AUDIO_HIGH_SYMBOL $VOLUME%"
     [[ $VOLUME -le $AUDIO_MED_THRESH ]] && LABEL="$AUDIO_MED_SYMBOL $VOLUME%"
     [[ $VOLUME -le $AUDIO_LOW_THRESH ]] && LABEL="$AUDIO_LOW_SYMBOL $VOLUME%"
