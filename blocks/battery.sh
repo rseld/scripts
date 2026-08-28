@@ -7,7 +7,7 @@ COLOR=${COLOR:-"#C0CAF5"}
 
 LABEL=${LABEL:-"󱉞 ?"}
 
-read STATUS PERCENTAGE < <(acpi -b | awk -F '[;,% ]+' '{ print $3, $4 ; exit }')
+read STATUS PERCENTAGE < <(acpi -b | sed 's/[[:space:]]//g' | awk -F '[:,% ]+' '{ print $2, $3 ; exit }')
 
 case "$STATUS" in
 Charging)
@@ -18,7 +18,7 @@ Full)
     LABEL="󱟢 $PERCENTAGE%"
     COLOR="$GOOD_COL"
     ;;
-Idle|AC)
+Notcharging|Idle|AC)
     LABEL="󱞜 $PERCENTAGE%"
     ;;
 Discharging)
