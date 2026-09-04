@@ -1,12 +1,7 @@
 #!/bin/bash
 
 # because pactl does not start early enough on fist boot
-for i in $(seq 1 10); do
-    if pactl get-default-sink >/dev/null 2>&1; then
-        break
-    fi
-    sleep 1
-done
+sleep 2
 
 AUDIO_HIGH_SYMBOL=${AUDIO_HIGH_SYMBOL:-' '}
 
