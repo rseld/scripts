@@ -5,6 +5,12 @@ get_state() {
     STATE="$result"
 }
 
+get_device() {
+    local device
+    device="$(bluetoothctl info | awk -F ':' '/Name:/ { print $2}' | sed 's/^[[:space:]]*//')"
+    LABEL+=" ($device)"
+}
+
 set_label() {
     local connected
     connected="$(bluetoothctl info | awk '/Connected:/ { print $2 }')"
@@ -12,6 +18,7 @@ set_label() {
         yes)
             if [ "$connected" = "yes" ]; then
                 LABEL="󰂱"
+                get_device
                 COLOR="$CON_COL"
             else
                 LABEL="󰂳"
