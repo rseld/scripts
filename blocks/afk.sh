@@ -11,8 +11,8 @@ get_state() {
     fi
 }
 
-AFK=${AFK:-"󰡬 "}
-NOFK=${NOFK:-"󱀧 "}
+AFK=${AFK:-"󰡬  ON"}
+NOFK=${NOFK:-"󱀧  OFF"}
 STATE=${STATE:-"Unknown"}
 DEFAULT_COLOR=${DEFAULT_COLOR:-"#C0CAF5"}
 AFK_COL=${AFK_COL:-"#E0AF68"}
