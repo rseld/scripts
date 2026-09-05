@@ -19,6 +19,7 @@ monitor_pid=$!
 
 if busctl --user call org.freedesktop.DBus /org/freedesktop/DBus org.freedesktop.DBus GetNameOwner s "${SPOTIFY_NAME}" &>/dev/null; then
     systemctl --user start "$LISTENER_UNIT"
+    pkill -RTMIN+8 i3blocks
 fi
 
 while read -r line; do
@@ -27,8 +28,10 @@ while read -r line; do
         new_owner="${BASH_REMATCH[3]}"
         if [[ -n "$new_owner" ]]; then
             systemctl --user start "$LISTENER_UNIT"
+            pkill -RTMIN+8 i3blocks
         else
             systemctl --user stop "$LISTENER_UNIT"
+            pkill -RTMIN+8 i3blocks
         fi
     fi
 done < "$monitor_fifo"

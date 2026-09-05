@@ -14,7 +14,8 @@ SPOTIFY_NAME="org.mpris.MediaPlayer2.spotify"
 
 if ! busctl --user call org.freedesktop.DBus /org/freedesktop/DBus org.freedesktop.DBus GetNameOwner s "$SPOTIFY_NAME" &>/dev/null; then
     if [[ "$BLOCK_BUTTON" == "1" ]]; then
-        spotify-launcher &
+        spotify-launcher &>/dev/null &
+        disown
     fi
     echo " x"
     echo " x"
