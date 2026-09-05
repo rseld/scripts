@@ -20,5 +20,6 @@ while read -r line; do
     if busctl --user call "$SPOTIFY_NAME" /org/mpris/MediaPlayer2 \
         org.freedesktop.DBus.Properties GetAll s "org.mpris.MediaPlayer2.Player" &>/dev/null; then
     pkill -RTMIN+8 i3blocks
+    echo "Signaling i3blocks (RTMIN+8)"
     fi
 done < "$monitor_fifo"
