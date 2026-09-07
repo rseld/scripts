@@ -21,12 +21,12 @@ set_label() {
                 get_device
                 COLOR="$CON_COL"
             else
-                LABEL="󰂳"
+                LABEL="󰂳..."
                 COLOR="$DISCON_COL"
             fi
         ;;
     no)
-        LABEL="󰂲"
+        LABEL="󰂲 x"
         COLOR="$OFF_COL"
         ;;
     esac

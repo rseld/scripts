@@ -26,7 +26,7 @@ fi
 case "$BLOCK_BUTTON" in
     1) playerctl -p spotify play-pause ;;
     8) playerctl -p spotify previous ;;
-    9) playerctl -p spotify next ;;
+    3) playerctl -p spotify next ;;
 esac
 
 state=$(busctl --user --json=short call "$SPOTIFY_NAME" /org/mpris/MediaPlayer2 \

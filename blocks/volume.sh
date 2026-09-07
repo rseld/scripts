@@ -1,7 +1,6 @@
 #!/bin/bash
 
 # because pactl does not start early enough on fist boot
-sleep 2
 
 AUDIO_HIGH_SYMBOL=${AUDIO_HIGH_SYMBOL:-' '}
 
