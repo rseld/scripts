@@ -27,21 +27,19 @@ set_label() {
         ;;
     no)
         LABEL="󰂲"
+        COLOR="$OFF_COL"
         ;;
     esac
 }
 
 LABEL=${LABEL:-" ?"}
 COLOR=${COLOR:-"#C0CAF5"}
+OFF_COL=${OFF_COL:-"#F7768E"}
 CON_COL=${CON_COL:-"#9ECE6A"}
 DISCON_COL=${DISCON_COL:-"#E0AF68"}
 
 get_state
 set_label
-
-echo $LABEL
-echo $LABEL
-echo $COLOR
 
 case "$BLOCK_BUTTON" in
     1)
@@ -54,3 +52,7 @@ case "$BLOCK_BUTTON" in
         set_label
         ;;
 esac
+
+echo $LABEL
+echo $LABEL
+echo $COLOR
