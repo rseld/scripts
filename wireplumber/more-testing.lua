@@ -17,13 +17,20 @@ local default_node_om = ObjectManager {
 }
 
 default_node_om:connect("object-added", function(_, metadata)
+  --  print("metadata object added, seeding current entries:")
+  --  for subject, key, value_type, value in metadata:iterate(-1) do
+  --    print("seed", subject, key, value_type, value)
+  --  end
+
   for _, key, _, value in metadata:iterate(-1) do
     if key == "default.configured.audio.sink" then
       current_default_name = value:match('"name": "(.*)"')
+      print(current_default_name)
     end
   end
 
   metadata:connect("changed", function(_, subject, key, value_type, value)
+    --    print("changed:", subject, key, value_type, value)
     if key == "default.configured.audio.sink" then
       current_default_name = value:match('"name": "(.*)"')
       print(current_default_name)
